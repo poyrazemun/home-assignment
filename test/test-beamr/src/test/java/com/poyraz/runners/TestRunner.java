@@ -6,8 +6,7 @@ import io.cucumber.testng.CucumberOptions;
 
 @CucumberOptions(
         features = "src/test/resources/features",
-        glue = "com/poyraz/stepdefinitions",
-        tags = "@smoke",
+        glue = "com.poyraz.step_definitions",
         plugin = {"pretty", "html:target/cucumber-reports.html",
                 "json:target/cucumber-reports.json",
                 "junit:target/cucumber-reports.xml"}

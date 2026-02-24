@@ -12,8 +12,11 @@ public class VideoCompressionPage extends BasePage {
         PageFactory.initElements(driver, this);
     }
 
+    @FindBy(xpath = "//label[@class='dropzone ']")
+    private WebElement dropZone;
+
     @FindBy(xpath = "//input[@type='file']")
-    private WebElement dropArea;
+    private WebElement fileInput;
 
     @FindBy(xpath = "//div[@class='optimizer-download-btn']")//appears when the video is compressed
     private WebElement downloadTheVideoButton;
@@ -28,8 +31,12 @@ public class VideoCompressionPage extends BasePage {
     private WebElement gaugeValueElement;//this element holds the difference between original and compressed video
 
 
+    public boolean isDropAreaVisible() {
+        return isElementVisible(dropZone);
+    }
+
     public void uploadFile(String filePath) {
-        dropArea.sendKeys(filePath);
+        fileInput.sendKeys(filePath);
     }
 
     public double getOriginalSize() {

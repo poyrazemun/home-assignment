@@ -33,6 +33,14 @@ public abstract class BasePage {
         element.sendKeys(text);
     }
 
+    public boolean isElementVisible(WebElement element) {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(element));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
     public String getText(WebElement element) {
         return wait.until(ExpectedConditions.visibilityOf(element)).getText();
@@ -60,4 +68,7 @@ public abstract class BasePage {
     }
 
 
+    public String getCurrentURL() {
+        return driver.getCurrentUrl();
+    }
 }

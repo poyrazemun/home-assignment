@@ -7,7 +7,7 @@ Feature: JPEGmini Video Compression Functionality
     Given I navigate to the JPEGmini homepage "https://jpegmini.com/"
 
   Scenario: Navigate to compression page and perform video optimization
-    When I click on the "Compress Videos" button
+    When I click on the Compress Videos button
     Then I should be redirected to the "https://jpegmini.com/compress-videos" page
     And I see the video upload drop zone
 
@@ -17,5 +17,5 @@ Feature: JPEGmini Video Compression Functionality
     And I record the reduction ratio
 
     When I click the "Download" button for the compressed video
-    Then the video is donwloaded to my local machine
+    Then the video is downloaded to my local machine
     And the downloaded compressed file's size is less than the original file

@@ -3,6 +3,7 @@ package com.poyraz.pages;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.Set;
 
@@ -28,7 +29,9 @@ public class HomePage extends BasePage {
         String originalWindow = driver.getWindowHandle();
 
         clickToElement(compressVideosLink);
-        
+
+        wait.until(ExpectedConditions.numberOfWindowsToBe(2));
+
         Set<String> allWindows = driver.getWindowHandles();
         for (String windowHandle : allWindows) {
             if (!windowHandle.equals(originalWindow)) {
@@ -36,6 +39,8 @@ public class HomePage extends BasePage {
                 break;
             }
         }
+
+        wait.until(ExpectedConditions.not(ExpectedConditions.urlToBe("about:blank")));
     }
 
 

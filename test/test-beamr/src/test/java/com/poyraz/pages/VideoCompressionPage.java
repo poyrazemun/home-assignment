@@ -1,9 +1,13 @@
 package com.poyraz.pages;
 
+import com.poyraz.utilities.ConfigurationReader;
 import com.poyraz.utilities.Helper;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
+import java.io.File;
+import java.time.Duration;
 
 public class VideoCompressionPage extends BasePage {
 
@@ -35,8 +39,15 @@ public class VideoCompressionPage extends BasePage {
         return isElementVisible(dropZone);
     }
 
-    public void uploadFile(String filePath) {
-        fileInput.sendKeys(filePath);
+    public void uploadFile(String fileName) {
+        String relativePath = "src/test/resources/" + fileName;
+        File file = new File(relativePath);
+        fileInput.sendKeys(file.getAbsolutePath());
+    }
+
+    public void waitUntilCompressionFinishes() {
+        int seconds = Integer.parseInt(ConfigurationReader.getProperty("compression-timeout-seconds"));
+        waitForElementToBeClickable(downloadTheVideoButton, Duration.ofSeconds(seconds));
     }
 
     public double getOriginalSize() {
@@ -56,6 +67,43 @@ public class VideoCompressionPage extends BasePage {
 
     public void downloadVideo() {
         clickToElement(downloadTheVideoButton);
+    }
+
+    public File waitForDownloadedFile(int timeoutSeconds) {
+
+        String downloadPath = System.getProperty("user.dir") + "\\downloads";
+        File dir = new File(downloadPath);
+
+        int waited = 0;
+
+        while (waited < timeoutSeconds) {
+
+            File[] files = dir.listFiles();
+
+            if (files != null) {
+                for (File f : files) {
+
+                    String name = f.getName().toLowerCase();
+
+                    if (name.endsWith(".crdownload") || name.endsWith(".tmp")) {
+                        continue;
+                    }
+                    if (name.endsWith(".mp4") || name.endsWith(".mov")
+                            || name.endsWith(".avi") || name.endsWith(".m4v")) {
+                        return f;
+                    }
+                }
+            }
+
+            try {
+                Thread.sleep(1000);
+                waited++;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return null;
     }
 
 

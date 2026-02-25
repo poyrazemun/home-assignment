@@ -14,8 +14,8 @@ Feature: JPEGmini Video Compression Functionality
     When I upload a non-optimized video file using drag-and-drop
     And I wait for the compression process to finish
     Then the compressed file size is smaller than the original file
-    And I record the reduction ratio
+    And I record the reduction amount
 
-    When I click the "Download" button for the compressed video
+    When I click the download the video button for the compressed video
     Then the video is downloaded to my local machine
     And the downloaded compressed file's size is less than the original file
